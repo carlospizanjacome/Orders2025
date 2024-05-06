@@ -9,21 +9,19 @@ namespace Orders.Frontend.Pages.Countries
     {
         private Country country = new();
         private CountryForm? countryForm;
-        [Inject] private IRepository Repository { get; set; } = null!;
+        [Inject] private IRepository repository { get; set; } = null!;
         [Inject] private SweetAlertService sweetAlertService { get; set; } = null!;
         [Inject] private  NavigationManager navigationManager { get; set; } = null!;
 
         private async Task CreateAsync()
         {
-            var responseHttp = await Repository.PostAsync("api/countries",country);
+            var responseHttp = await repository.PostAsync("api/countries",country);
 
             if (responseHttp.Error)
             {
                 var message = await responseHttp.GetErrorMessageAsync();
-
-                
-                    await sweetAlertService.FireAsync("error", message);
-                    return;
+                await sweetAlertService.FireAsync("error", message, SweetAlertIcon.Error);
+                return;
                 
             }
             Return();
