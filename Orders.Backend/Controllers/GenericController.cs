@@ -21,7 +21,7 @@ namespace Orders.Backend.Controllers
         {
             var action  = await _unitOfWork.GetAsync();
 
-            if (action.wasSuccess)
+            if (action.WasSuccess)
             {
 
                 return Ok(action.Result);
@@ -37,7 +37,7 @@ namespace Orders.Backend.Controllers
         {
             var action = await _unitOfWork.GetAsync(id);
 
-            if (action.wasSuccess)
+            if (action.WasSuccess)
             {
 
                 return Ok(action.Result);
@@ -53,7 +53,7 @@ namespace Orders.Backend.Controllers
         {
             var action = await _unitOfWork.AddAsync(model);
 
-            if (action.wasSuccess)
+            if (action.WasSuccess)
             {
 
                 return Ok(action.Result);
@@ -69,7 +69,7 @@ namespace Orders.Backend.Controllers
         {
             var action = await _unitOfWork.UpdateAsync(model);
 
-            if (action.wasSuccess)
+            if (action.WasSuccess)
             {
 
                 return Ok(action.Result);
@@ -85,7 +85,7 @@ namespace Orders.Backend.Controllers
         {
             var action = await _unitOfWork.DeleteAsync(id);
 
-            if (action.wasSuccess)
+            if (action.WasSuccess)
             {
 
                 return NoContent();

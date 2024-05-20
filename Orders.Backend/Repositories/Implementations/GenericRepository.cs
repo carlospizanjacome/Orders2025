@@ -1,7 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Orders.Backend.Data;
 using Orders.Backend.Repositories.Interfaces;
-using Orders.Shared.Entities.Responses;
+
+using Orders.Shared.Responses;
 
 namespace Orders.Backend.Repositories.Implementations
 {
@@ -16,7 +17,7 @@ namespace Orders.Backend.Repositories.Implementations
             _entity = _context.Set<T>();
         }
 
-        public async Task<ActionResponse<T>> AddAsync(T entity)
+        public virtual async Task<ActionResponse<T>> AddAsync(T entity)
         {
             _context.Add(entity);
 
@@ -26,7 +27,7 @@ namespace Orders.Backend.Repositories.Implementations
 
                 return new ActionResponse<T>
                 {
-                    wasSuccess = true,
+                    WasSuccess = true,
                     Result = entity
                 };
             }
@@ -40,7 +41,7 @@ namespace Orders.Backend.Repositories.Implementations
             }
         }
 
-        public async Task<ActionResponse<T>> DeleteAsync(int id)
+        public virtual async Task<ActionResponse<T>> DeleteAsync(int id)
         {
             var row = await _entity.FindAsync(id);
 
@@ -48,7 +49,7 @@ namespace Orders.Backend.Repositories.Implementations
             {
                 return new ActionResponse<T>
                 {
-                    wasSuccess = false,
+                    WasSuccess = false,
                     Message = "Registro no Encontrado"
                 };
             }
@@ -59,20 +60,20 @@ namespace Orders.Backend.Repositories.Implementations
                 await _context.SaveChangesAsync();
                 return new ActionResponse<T>
                 {
-                    wasSuccess = true,
+                    WasSuccess = true,
                 };
             }
             catch
             {
                 return new ActionResponse<T>
                 {
-                    wasSuccess = false,
+                    WasSuccess = false,
                     Message = "No se Puede Borrar por que tiene registros relacionados"
                 };
             }
         }
 
-        public async Task<ActionResponse<T>> GetAsync(int id)
+        public virtual async Task<ActionResponse<T>> GetAsync(int id)
         {
             var row = await _entity.FindAsync(id);
 
@@ -80,28 +81,28 @@ namespace Orders.Backend.Repositories.Implementations
             {
                 return new ActionResponse<T>
                 {
-                    wasSuccess = false,
+                    WasSuccess = false,
                     Message = "Registro no Encontrado"
                 };
             }
 
             return new ActionResponse<T>
             {
-                wasSuccess = true,
+                WasSuccess = true,
                 Result = row
             };
         }
 
-        public async Task<ActionResponse<IEnumerable<T>>> GetAsync()
+        public virtual async Task<ActionResponse<IEnumerable<T>>> GetAsync()
         {
             return new ActionResponse<IEnumerable<T>>
             {
-                wasSuccess = true,
+                WasSuccess = true,
                 Result = await _entity.ToListAsync()
             };
         }
 
-        public async Task<ActionResponse<T>> UpdateAsync(T entity)
+        public virtual async Task<ActionResponse<T>> UpdateAsync(T entity)
         {
             _context.Update(entity);
 
@@ -111,7 +112,7 @@ namespace Orders.Backend.Repositories.Implementations
 
                 return new ActionResponse<T>
                 {
-                    wasSuccess = true,
+                    WasSuccess = true,
                     Result = entity
                 };
             }
@@ -129,7 +130,7 @@ namespace Orders.Backend.Repositories.Implementations
         {
             return new ActionResponse<T>
             {
-                wasSuccess = false,
+                WasSuccess = false,
                 Message = "Ya existe el registro que estas intentando crear"
             };
         }
@@ -138,7 +139,7 @@ namespace Orders.Backend.Repositories.Implementations
         {
             return new ActionResponse<T>
             {
-                wasSuccess = false,
+                WasSuccess = false,
                 Message = exception.Message
             };
         }

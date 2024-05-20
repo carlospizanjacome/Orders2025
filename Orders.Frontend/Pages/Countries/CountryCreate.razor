@@ -1,5 +1,5 @@
 ﻿@page "/countries/create"
 
-<h3>Paises</h3>
+<h1>Craar Paises</h1>
 
-<CountryForm @ref="countryForm" Country="country" OnValidSubmit="CreateAsync" ReturnAction="Return"/>
+<FormWithName @ref="countryForm" Label="Pais:" Model="country" OnValidSubmit="CreateAsync"ReturnAction="Return"/>

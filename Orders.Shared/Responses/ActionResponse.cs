@@ -4,15 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Orders.Shared.Entities.Responses
+namespace Orders.Shared.Responses
 {
     public class ActionResponse<T>
     {
-
-        public bool  wasSuccess { get; set; }
-
+        public bool WasSuccess { get; set; }
         public string? Message { get; set; }
-
         public T? Result { get; set; }
     }
 }
