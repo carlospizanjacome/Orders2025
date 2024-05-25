@@ -27,5 +27,28 @@ namespace Orders.Backend.Repositories.Implementations
             };
 
         }
+
+        public override async Task<ActionResponse<State>> GetAsync(int id)
+        {
+            var state = await _context.States
+                 .Include(s => s.Cities)
+                 .FirstOrDefaultAsync(s => s.Id == id);
+
+            if (state == null)
+            {
+                return new ActionResponse<State>
+                {
+                    WasSuccess = false,
+                    Message = "Estado no existe"
+                };
+            }
+
+            return new ActionResponse<State>
+            {
+                WasSuccess = true,
+                Result = state
+            };
+        }
+
     }
 }
