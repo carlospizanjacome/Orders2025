@@ -1,4 +1,4 @@
-﻿@page "/Countries"
+﻿@page "/countries"
 @using Orders.Frontend.Shared
 
 
@@ -11,12 +11,18 @@
 
 <GenericList MyList="Countries">
     <Body>
+
+        <Pagination CurrentPage="currentPage"
+                    TotalPage="totalPage"
+                    SelectedPage="SelectedPageAsync" />
+
         <table class="table table-striped">
             <thead>
                 <tr>
                     <th>Pais</th>
-                    <th>Departamento/Estado </th>
-                    <th> </th>
+                    <th style="width:210px">Departamentos / Estados</th>
+                    <th style="width:210px"></th>
+
                 </tr>
             </thead>
 

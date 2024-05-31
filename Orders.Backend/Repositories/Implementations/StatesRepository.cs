@@ -57,7 +57,6 @@ namespace Orders.Backend.Repositories.Implementations
         public override async Task<ActionResponse<IEnumerable<State>>> GetAsync(PaginationDTO pagination)
         {
             var queryable = _context.States
-                 .OrderBy(x => x.Name)
                 .Include(x => x.Cities)
                 .Where(x => x.Country!.Id == pagination.Id)
                 .AsQueryable();

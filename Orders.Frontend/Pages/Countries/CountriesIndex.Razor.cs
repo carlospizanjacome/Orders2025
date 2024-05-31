@@ -9,9 +9,11 @@ namespace Orders.Frontend.Pages.Countries
 {
     public partial class CountriesIndex
     {
-        [Inject]
-        private IRepository Repository { get; set; } = null!;
 
+        private int currentPage = 1;
+        private int totalPage;
+
+        [Inject] private IRepository Repository { get; set; } = null!;
         [Inject] private SweetAlertService SweetAlertService { get; set; } = null!;
         [Inject] private NavigationManager NavigationManager { get; set; } = null!;
 
@@ -23,21 +25,50 @@ namespace Orders.Frontend.Pages.Countries
             
         }
 
-        private async Task LoadAsync()
-        {
-          
-            var responseHttp = await Repository.GetAsync<List<Country>>("api/countries");
 
+        private async Task SelectedPageAsync(int page)
+        {
+            currentPage = page;
+            await LoadAsync(page);
+        }
+
+        private async Task LoadAsync(int page = 1)
+        {
+            var ok = await LoadListAsync(page);
+
+            if (ok)
+            {
+                await LoadPagesAsync();
+            }
+        }
+
+        private async Task<bool> LoadListAsync(int page)
+        {
+            var responseHttp = await Repository.GetAsync<List<Country>>($"api/countries?page={page}");
 
             if (responseHttp.Error)
             {
                 var message = await responseHttp.GetErrorMessageAsync();
-                await SweetAlertService.FireAsync("error", message,SweetAlertIcon.Error);
-                return;
-
+                await SweetAlertService.FireAsync("Error", message, SweetAlertIcon.Error);
+                return false;
             }
             Countries = responseHttp.Response;
+            return true;
         }
+
+        private async Task LoadPagesAsync()
+        {
+            var responseHttp = await Repository.GetAsync<int>("api/countries/totalPages");
+            if (responseHttp.Error)
+            {
+                var message = await responseHttp.GetErrorMessageAsync();
+                await SweetAlertService.FireAsync("Error", message, SweetAlertIcon.Error);
+                return;
+            }
+            totalPage = responseHttp.Response;
+        }
+
+
 
         private async Task DeleteAsync(Country country)
         {

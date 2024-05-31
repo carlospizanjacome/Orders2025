@@ -11,7 +11,8 @@ namespace Orders.Backend.Controllers
     {
         private readonly ICitiesUnitOfWork _citiesUnitOfWork;
 
-        public CitiesController(IGenericUnitOfWork<City> unitOfWork, ICitiesUnitOfWork citiesUnitOfWork) : base(unitOfWork)
+        public CitiesController(IGenericUnitOfWork<City> unitOfWork, ICitiesUnitOfWork citiesUnitOfWork) : base
+        (unitOfWork)
         {
             _citiesUnitOfWork = citiesUnitOfWork;
         }

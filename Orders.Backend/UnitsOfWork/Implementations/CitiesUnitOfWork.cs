@@ -12,7 +12,9 @@ namespace Orders.Backend.UnitsOfWork
     {
         private readonly ICitiesRepository _citiesRepository;
 
-        public CitiesUnitOfWork(IGenericRepository<City> repository, ICitiesRepository citiesRepository) : base(repository)
+        public CitiesUnitOfWork(IGenericRepository<City> repository, ICitiesRepository citiesRepository) : base
+        (repository)
+
         {
             _citiesRepository = citiesRepository;
         }

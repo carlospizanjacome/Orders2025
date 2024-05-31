@@ -22,11 +22,6 @@ namespace Orders.Backend.UnitsOfWork.Implementations
             _repository.GetTotalPagesAsync(pagination);
 
 
-
-
-     
-
-
         public virtual async  Task<ActionResponse<T>> AddAsync(T model)=> await _repository.AddAsync(model);
        
 

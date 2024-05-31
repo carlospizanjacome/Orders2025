@@ -20,7 +20,7 @@ namespace Orders.Backend.Repositories.Implementations
         public override async Task<ActionResponse<IEnumerable<Country>>> GetAsync()
         {
             var countries = await _context.Countries
-                .Include(c => c.States)
+                .OrderBy(c => c.Name)
                 .ToListAsync();
             return new ActionResponse<IEnumerable<Country>>
             {
@@ -39,6 +39,7 @@ namespace Orders.Backend.Repositories.Implementations
             {
                 WasSuccess = true,
                 Result = await queryable
+                     .OrderBy(x=>x.Name)
                     .Paginate(pagination)
                     .ToListAsync()
             };

@@ -11,7 +11,8 @@ namespace Orders.Backend.Controllers
     {
         private readonly IStatesUnitOfWork _statesUnitOfWork;
 
-        public StatesController(IGenericUnitOfWork<State> unitOfWork, IStatesUnitOfWork statesUnitOfWork) : base(unitOfWork)
+        public StatesController(IGenericUnitOfWork<State> unitOfWork, IStatesUnitOfWork statesUnitOfWork) : base
+            (unitOfWork)
         {
             _statesUnitOfWork = statesUnitOfWork;
         }
